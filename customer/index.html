@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZULLI Customer Portal</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#07111f;
+  color:white;
+}
+
+.container{
+  width:min(900px,92%);
+  margin:auto;
+}
+
+header{
+  padding:20px 0;
+  border-bottom:1px solid #20334a;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#2f8cff;
+}
+
+.hero{
+  text-align:center;
+  padding:55px 0 30px;
+}
+
+.hero h1{
+  font-size:clamp(36px,8vw,58px);
+  margin:0 0 12px;
+}
+
+.hero p{
+  color:#9aacc0;
+  font-size:16px;
+}
+
+.card{
+  max-width:650px;
+  margin:20px auto 60px;
+  padding:25px;
+  background:#0d1b2d;
+  border:1px solid #203a56;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+label{
+  display:block;
+  margin:16px 0 7px;
+  font-weight:bold;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #29445f;
+  background:#081729;
+  color:white;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#2f8cff;
+}
+
+textarea{
+  resize:vertical;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:20px;
+  border:0;
+  border-radius:10px;
+  background:#2f8cff;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+}
+
+.message{
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+}
+
+.success{
+  background:#103b2b;
+  color:#9cf3c8;
+}
+
+.error{
+  background:#431821;
+  color:#ffb6c0;
+}
+
+footer{
+  text-align:center;
+  color:#71849a;
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">
+      ZULLI<span> Customer Portal</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <h1>How can we help?</h1>
+  <p>
+    Send us your information and enquiry.
+    Our team will get back to you.
+  </p>
+</section>
+
+<section class="card">
+
+<form id="customerForm">
+
+<label>Full Name *</label>
+<input
+  id="fullName"
+  type="text"
+  placeholder="Enter your full name"
+  required
+>
+
+<label>Phone Number *</label>
+<input
+  id="phone"
+  type="tel"
+  placeholder="08012345678"
+  required
+>
+
+<label>Email Address</label>
+<input
+  id="email"
+  type="email"
+  placeholder="example@email.com"
+>
+
+<label>Address</label>
+<textarea
+  id="address"
+  rows="2"
+  placeholder="Enter your address"
+></textarea>
+
+<label>What are you interested in? *</label>
+
+<select id="interest" required>
+  <option value="">Select an option</option>
+  <option>Phones</option>
+  <option>Phone Accessories</option>
+  <option>Gadgets</option>
+  <option>Devices</option>
+  <option>General Enquiry</option>
+  <option>Other</option>
+</select>
+
+<label>Message</label>
+
+<textarea
+  id="message"
+  rows="5"
+  placeholder="Tell us what you need..."
+></textarea>
+
+<button id="submitBtn" type="submit">
+  Submit Information
+</button>
+
+<div id="successMessage" class="message success">
+  ✅ Your information has been submitted successfully.
+  Thank you for contacting ZULLI.
+</div>
+
+<div id="errorMessage" class="message error"></div>
+
+</form>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 ZULLI. All rights reserved.
+</footer>
+
+<script>
+
+const form = document.getElementById("customerForm");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const successMessage =
+  document.getElementById("successMessage");
+
+const errorMessage =
+  document.getElementById("errorMessage");
+
+
+form.addEventListener("submit", async function(event){
+
+  event.preventDefault();
+
+  successMessage.style.display = "none";
+  errorMessage.style.display = "none";
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
+  const data = {
+
+    fullName:
+      document.getElementById("fullName").value.trim(),
+
+    phone:
+      document.getElementById("phone").value.trim(),
+
+    email:
+      document.getElementById("email").value.trim(),
+
+    address:
+      document.getElementById("address").value.trim(),
+
+    interest:
+      document.getElementById("interest").value,
+
+    message:
+      document.getElementById("message").value.trim()
+
+  };
+
+
+  try{
+
+    const response = await fetch(
+      "/api/submissions",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(data)
+      }
+    );
+
+
+    const result =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        result.error ||
+        "Something went wrong."
+      );
+
+    }
+
+
+    form.reset();
+
+    successMessage.style.display = "block";
+
+  }catch(error){
+
+    errorMessage.textContent =
+      "❌ " + error.message;
+
+    errorMessage.style.display =
+      "block";
+
+  }
+
+
+  submitBtn.disabled = false;
+  submitBtn.textContent =
+    "Submit Information";
+
+});
+
+</script>
+
+</body>
+  </html>
