@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZULLI Admin</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#07111f;
+  color:#fff;
+}
+
+.container{
+  width:min(1100px,94%);
+  margin:auto;
+}
+
+header{
+  padding:20px 0;
+  border-bottom:1px solid #20334a;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#2f8cff;
+}
+
+.card{
+  background:#0d1b2d;
+  border:1px solid #203a56;
+  border-radius:18px;
+  padding:22px;
+}
+
+.login{
+  max-width:420px;
+  margin:80px auto;
+}
+
+h1{
+  margin-top:0;
+}
+
+label{
+  display:block;
+  margin:15px 0 7px;
+  font-weight:bold;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  border-radius:9px;
+  border:1px solid #29445f;
+  background:#081729;
+  color:#fff;
+  font:inherit;
+}
+
+button{
+  padding:12px 16px;
+  border:0;
+  border-radius:9px;
+  background:#2f8cff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.login button{
+  width:100%;
+  margin-top:18px;
+}
+
+.error{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:9px;
+  background:#431821;
+  color:#ffb6c0;
+}
+
+.dashboard{
+  display:none;
+  padding:35px 0;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.dark{
+  background:#17304b;
+}
+
+.red{
+  background:#8f2631;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#0d1b2d;
+  border:1px solid #203a56;
+  border-radius:14px;
+  padding:18px;
+}
+
+.stat span{
+  display:block;
+  color:#91a4bb;
+  margin-bottom:5px;
+}
+
+.stat strong{
+  font-size:28px;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.toolbar input{
+  flex:1;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:900px;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:12px;
+  text-align:left;
+  border-bottom:1px solid #20334a;
+  vertical-align:top;
+}
+
+th{
+  color:#91a4bb;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#173657;
+  font-size:12px;
+}
+
+.small{
+  color:#91a4bb;
+  font-size:13px;
+}
+
+@media(max-width:700px){
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+ 
